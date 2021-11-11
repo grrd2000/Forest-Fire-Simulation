@@ -26,8 +26,8 @@ public class Grid {
     public static int fire = -2;
     public static int burnt = -3;
 
-    private final float fireBrushSpeed = .4f;
-    private final float treesBrushSpeed = .4f;
+    private final float fireBrushSpeed = 6.5f;       //0.9f
+    private final float treesBrushSpeed = 14f;     //0.75f
 
     private final double fireP = 37.5;
     private final double randomFireP = 0.0000075;
@@ -62,7 +62,6 @@ public class Grid {
     }
 
     public void startSimulation() {
-        i++;
         for(int x = 1; x < width - 1; x++) {
             for(int y = 1; y < height - 1; y++) {
                 if(imageTable[x][y] != 0) {
@@ -78,6 +77,7 @@ public class Grid {
                 }
             }
         }
+        i++;
         dataCopier();
     }
 
@@ -113,8 +113,8 @@ public class Grid {
     }
 
     public void addBrushOfTrees(int xCor, int yCor, float size) {
-        for (double r = 0; r <= size / 2; r += 0.1) {
-            for (double a = 0; a < 2 * Math.PI; a += 0.1) {
+        for (double r = 4; r <= size / 2; r += 1.5) {
+            for (double a = 0; a < 2 * Math.PI; a += 0.05) {
                 Random random = new Random();
                 float rand = 100 * random.nextFloat();
 
@@ -129,8 +129,8 @@ public class Grid {
     }
 
     public void addBrushOfFire(int xCor, int yCor, float size) {
-        for (double r = 0; r <= size / 2; r += 0.1) {
-            for (double a = 0; a < 2 * Math.PI; a += 0.1) {
+        for (double r = 3; r <= size / 2; r += 1.5) {           //żadzenie punktów wraz z promieniem
+            for (double a = 0; a < 2 * Math.PI; a += 0.05) {
                 Random random = new Random();
                 float rand = 100 * random.nextFloat();
 
