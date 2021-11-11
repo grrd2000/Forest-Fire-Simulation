@@ -33,7 +33,7 @@ public class SimulationPanel extends JPanel{
                 else if (map.table[x][y] == Grid.fire)
                     g2D.setColor(map.fireColor);
                 else {
-                    int color = map.imageTable[x][y];
+                    int color = map.inputImageTable[x][y];
                     g2D.setColor(new Color(color, color, color));
                 }
                 g2D.fillRect(x, y, 1, 1);

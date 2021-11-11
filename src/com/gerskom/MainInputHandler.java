@@ -8,7 +8,7 @@ public class MainInputHandler implements KeyListener, MouseListener, MouseMotion
     private static int mouseButton = -1;
 
     private final float fireBrushSize = 20f;
-    private final float treesBrushSize = 75f;
+    private final float treesBrushSize = 70f;
 
     public MainInputHandler(SimulationPanel simulationPanel) {
         this.simulationPanel = simulationPanel;

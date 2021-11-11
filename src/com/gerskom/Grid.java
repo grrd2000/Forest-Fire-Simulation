@@ -15,6 +15,7 @@ public class Grid {
     public int[][] table;
     private final int[][] tmpTable;
     public final int[][] imageTable;
+    public int[][] inputImageTable;
     public final Color bgColor = new Color(50, 50, 50);
     public final Color fireColor = new Color(250, 110, 0);
     public final Color treeColor = new Color(110, 125, 40);
@@ -28,10 +29,10 @@ public class Grid {
     private final float fireBrushSpeed = .4f;
     private final float treesBrushSpeed = .4f;
 
-    private final double fireP = 35;
-    private final double randomFireP = 0.000005;
-    private final double resurrectionP = 0.0005; //0.0005
-    private final double burnP = 1.5;
+    private final double fireP = 37.5;
+    private final double randomFireP = 0.0000075;
+    private final double resurrectionP = 0.00075; //0.0005
+    private final double burnP = 1.75;
 
     public Grid(int width, int height, int nMax) {
         this.width = width;
@@ -43,16 +44,19 @@ public class Grid {
                 this.table[x][y] = burnt;
         this.tmpTable = new int[width][height];
         this.imageTable = new int[width][height];
+        this.inputImageTable = new int[width][height];
         dataCopier();
     }
 
-    public Grid(ImageData id, int nMax) {
+    public Grid(ImageData id, int nMax) throws IOException {
         this.width = id.width;
         this.height = id.height;
         this.nMax = nMax;
         this.table = new int[width][height];
         this.tmpTable = new int[width][height];
         this.imageTable = new int[width][height];
+        this.inputImageTable = new int[width][height];
+        backgroundImage();
         importImageData(id);
         dataCopier();
     }
@@ -67,10 +71,8 @@ public class Grid {
 
                     if (tmpTable[x][y] == burnt && resurrectionP >= r)
                         addTree(x, y);
-
                     else if (tmpTable[x][y] == tree && neighbourFireScan(x, y) >= r)
                         addFire(x, y);
-
                     else if (tmpTable[x][y] == fire && burnP >= r)
                         table[x][y] = burnt;
                 }
@@ -97,8 +99,7 @@ public class Grid {
 
     public void dataCopier() {
         for(int x = 0; x < width; x++)
-            for(int y = 0; y < height; y++)
-                this.tmpTable[x][y] = table[x][y];
+            if (height >= 0) System.arraycopy(table[x], 0, this.tmpTable[x], 0, height);
     }
 
     public void addTree(int xCor, int yCor) {
@@ -154,10 +155,12 @@ public class Grid {
 
     private void importImageData(ImageData id) {
         for (int x = 0; x < width; x++)
-            for (int y = 0; y < height; y++) {
-                this.imageTable[x][y] = id.dataTable[x][y];
-            }
-        //dataCopier();
+            if (height >= 0) System.arraycopy(id.dataTable[x], 0, this.imageTable[x], 0, height);
+    }
+
+    private void backgroundImage() throws IOException {
+        ImageData bg = new ImageData("input/input_map.bmp");
+        this.inputImageTable = bg.dataTable;
     }
 
     public void exportImage(String fileName) throws IOException {
