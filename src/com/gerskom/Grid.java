@@ -14,6 +14,7 @@ public class Grid {
     public int nMax;
     public int[][] table;
     private final int[][] tmpTable;
+    public final int[][] imageTable;
     public final Color bgColor = new Color(50, 50, 50);
     public final Color fireColor = new Color(250, 110, 0);
     public final Color treeColor = new Color(110, 125, 40);
@@ -29,7 +30,7 @@ public class Grid {
 
     private final double fireP = 35;
     private final double randomFireP = 0.000005;
-    private final double resurrectionP = 0.0005;
+    private final double resurrectionP = 0.0005; //0.0005
     private final double burnP = 1.5;
 
     public Grid(int width, int height, int nMax) {
@@ -37,11 +38,11 @@ public class Grid {
         this.height = height;
         this.nMax = nMax;
         this.table = new int[width][height];
-
         for (int x = 0; x < width; x++)
             for (int y = 0; y < height; y++)
                 this.table[x][y] = burnt;
         this.tmpTable = new int[width][height];
+        this.imageTable = new int[width][height];
         dataCopier();
     }
 
@@ -50,25 +51,29 @@ public class Grid {
         this.height = id.height;
         this.nMax = nMax;
         this.table = new int[width][height];
-        importImageData(id);
         this.tmpTable = new int[width][height];
+        this.imageTable = new int[width][height];
+        importImageData(id);
         dataCopier();
     }
 
     public void startSimulation() {
+        i++;
         for(int x = 1; x < width - 1; x++) {
             for(int y = 1; y < height - 1; y++) {
-                Random random = new Random();
-                double r = random.nextDouble() * 100;
+                if(imageTable[x][y] != 0) {
+                    Random random = new Random();
+                    double r = random.nextDouble() * 100;
 
-                if(tmpTable[x][y] == burnt && resurrectionP >= r)
-                    table[x][y] = tree;
+                    if (tmpTable[x][y] == burnt && resurrectionP >= r)
+                        addTree(x, y);
 
-                else if(tmpTable[x][y] == tree && neighbourFireScan(x, y) >= r)
-                    table[x][y] = fire;
+                    else if (tmpTable[x][y] == tree && neighbourFireScan(x, y) >= r)
+                        addFire(x, y);
 
-                else if(tmpTable[x][y] == fire && burnP >= r)
-                    table[x][y] = burnt;
+                    else if (tmpTable[x][y] == fire && burnP >= r)
+                        table[x][y] = burnt;
+                }
             }
         }
         dataCopier();
@@ -91,18 +96,19 @@ public class Grid {
     }
 
     public void dataCopier() {
-        i++;
         for(int x = 0; x < width; x++)
             for(int y = 0; y < height; y++)
                 this.tmpTable[x][y] = table[x][y];
     }
 
     public void addTree(int xCor, int yCor) {
-        this.table[xCor][yCor] = tree;
+        if(imageTable[xCor][yCor] != 0)
+            this.table[xCor][yCor] = tree;
     }
 
     public void addFire(int xCor, int yCor) {
-        this.table[xCor][yCor] = fire;
+        if(imageTable[xCor][yCor] != 0)
+            this.table[xCor][yCor] = fire;
     }
 
     public void addBrushOfTrees(int xCor, int yCor, float size) {
@@ -115,11 +121,8 @@ public class Grid {
                 int y = (int)(r * Math.sin(a));
 
                 if (treesBrushSpeed >= rand)
-                    if (x + xCor > 0 && x + xCor < width && y + yCor > 0 && y + yCor < height &&
-                        y + yCor > 0 && y + yCor < width && x + xCor > 0 && x + xCor < height) {
+                    if ((x + xCor) > 0 && (x + xCor) < width && (y + yCor) > 0 && (y + yCor) < height)
                         addTree(x + xCor, y + yCor);
-                        //System.out.println(x + xCor +", "+ y + yCor);
-                    }
             }
         }
     }
@@ -134,8 +137,7 @@ public class Grid {
                 int y = (int)(r * Math.sin(a));
 
                 if (fireBrushSpeed >= rand)
-                    if (x + xCor > 0 && x + xCor < width && y + yCor > 0 && y + yCor < height &&
-                        y + yCor > 0 && y + yCor < width && x + xCor > 0 && x + xCor < height)
+                    if ((x + xCor) > 0 && (x + xCor) < width && (y + yCor) > 0 && (y + yCor) < height)
                         addFire(x + xCor, y + yCor);
             }
         }
@@ -149,10 +151,13 @@ public class Grid {
             addTree(x, y);
         }
     }
+
     private void importImageData(ImageData id) {
         for (int x = 0; x < width; x++)
-            for (int y = 0; y < height; y++)
-                this.table[x][y] = id.dataTable[x][y];
+            for (int y = 0; y < height; y++) {
+                this.imageTable[x][y] = id.dataTable[x][y];
+            }
+        //dataCopier();
     }
 
     public void exportImage(String fileName) throws IOException {
@@ -161,26 +166,20 @@ public class Grid {
 
         for(int x = 0; x < width; x++){
             for(int y = 0; y < height; y++){
-                int color = table[x][y];
-                g2D.setColor(new Color(color, color, color));
-                g2D.fillRect(x, y, 1, 1);
-            }
-        }
-
-        for(int x = 0; x < width; x++){
-            for(int y = 0; y < height; y++){
-                if (table[x][y] == burnt)
+                if (table[x][y] == Grid.burnt)
                     g2D.setColor(bgColor);
-                else if (table[x][y] == tree)
+                else if (table[x][y] == Grid.tree)
                     g2D.setColor(treeColor);
-                else if (table[x][y] == fire)
+                else if (table[x][y] == Grid.fire)
                     g2D.setColor(fireColor);
-
+                else {
+                    int color = imageTable[x][y];
+                    g2D.setColor(new Color(color, color, color));
+                }
                 g2D.fillRect(x, y, 1, 1);
             }
         }
         g2D.dispose();
-        System.out.println(Arrays.deepToString(table));
 
         String formatName = "png";
         File file = new File("output/" + fileName + "_" + i + "." + formatName);

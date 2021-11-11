@@ -22,8 +22,8 @@ public class MainFrame extends JFrame {
 
         int width = map.width + 6 * hGap - 3;
         int height = map.height + 8 * vGap;
-        System.out.println(map.width + "x" + map.height);
-        System.out.println(width + "x" + height);
+        //System.out.println(map.width + "x" + map.height);
+        //System.out.println(width + "x" + height);
         this.setSize(width, height);
         this.setTitle("Game Of Life");
         this.getContentPane().setBackground(Color.DARK_GRAY);
