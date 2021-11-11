@@ -1,6 +1,7 @@
 package com.gerskom;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 public class ForestFire {
 
@@ -9,6 +10,11 @@ public class ForestFire {
     }
 
     public ForestFire(String path) throws IOException {
-        new ImageOperation(new ImageData(path)).binarization(200);
+        ImageOperation io = new ImageOperation(new ImageData(path));
+        //io.binarization(200);
+        System.out.println(Arrays.deepToString(io.imageData.dataTable));
+
+        new Grid(io.imageData, 30000).exportImage("test");
+        //new MainFrame(new Grid(io.imageData, 30000));
     }
 }

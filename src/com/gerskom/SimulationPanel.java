@@ -25,18 +25,17 @@ public class SimulationPanel extends JPanel{
 
         for(int x = 0; x < map.width; x++){
             for(int y = 0; y < map.height; y++){
-                if (map.table[x][y] == 0)
+                if (map.table[x][y] == Grid.burnt)
                     g2D.setColor(map.bgColor);
-                else if (map.table[x][y] == 1)
+                else if (map.table[x][y] == Grid.tree)
                     g2D.setColor(map.treeColor);
-                else if (map.table[x][y] == 2)
+                else if (map.table[x][y] == Grid.fire)
                     g2D.setColor(map.fireColor);
 
                 g2D.fillRect(x, y, 1, 1);
             }
         }
         g2D.dispose();
-
         //this.requestFocusInWindow();
     }
 

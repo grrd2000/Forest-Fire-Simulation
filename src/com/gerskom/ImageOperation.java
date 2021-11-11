@@ -1,7 +1,7 @@
 package com.gerskom;
 
 public class ImageOperation {
-    private final ImageData imageData;
+    public final ImageData imageData;
 
     ImageOperation(ImageData id) {
         this.imageData = id;

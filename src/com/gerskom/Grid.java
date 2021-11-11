@@ -19,6 +19,10 @@ public class Grid {
 
     private int i = 0;
 
+    public static int tree = -1;
+    public static int fire = -2;
+    public static int burnt = -3;
+
     private final float fireBrushSpeed = .4f;
     private final float treesBrushSpeed = .4f;
 
@@ -35,7 +39,16 @@ public class Grid {
 
         for (int x = 0; x < width; x++)
             for (int y = 0; y < height; y++)
-                this.table[x][y] = 0;
+                this.table[x][y] = burnt;
+        this.tmpTable = new int[width][height];
+        dataCopier();
+    }
+
+    public Grid(ImageData id, int nMax) {
+        this.width = id.width;
+        this.height = id.height;
+        this.nMax = nMax;
+        this.table = id.dataTable;
         this.tmpTable = new int[width][height];
         dataCopier();
     }
@@ -46,14 +59,14 @@ public class Grid {
                 Random random = new Random();
                 double r = random.nextDouble() * 100;
 
-                if(tmpTable[x][y] == 0 && resurrectionP >= r)
-                    table[x][y] = 1;
+                if(tmpTable[x][y] == burnt && resurrectionP >= r)
+                    table[x][y] = tree;
 
-                else if(tmpTable[x][y] == 1 && neighbourFireScan(x, y) >= r)
-                    table[x][y] = 2;
+                else if(tmpTable[x][y] == tree && neighbourFireScan(x, y) >= r)
+                    table[x][y] = fire;
 
-                else if(tmpTable[x][y] == 2 && burnP >= r)
-                    table[x][y] = 0;
+                else if(tmpTable[x][y] == fire && burnP >= r)
+                    table[x][y] = burnt;
             }
         }
         dataCopier();
@@ -65,7 +78,7 @@ public class Grid {
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
                 if (!(i == 0 && j == 0)) {
-                    if (tmpTable[w + i][h + j] == 2) {
+                    if (tmpTable[w + i][h + j] == fire) {
                         counter++;
                     }
                 }
@@ -83,11 +96,11 @@ public class Grid {
     }
 
     public void addTree(int xCor, int yCor) {
-        this.table[xCor][yCor] = 1;
+        this.table[xCor][yCor] = tree;
     }
 
     public void addFire(int xCor, int yCor) {
-        this.table[xCor][yCor] = 2;
+        this.table[xCor][yCor] = fire;
     }
 
     public void addBrushOfTrees(int xCor, int yCor, float size) {
@@ -141,11 +154,11 @@ public class Grid {
 
         for(int x = 0; x < width; x++){
             for(int y = 0; y < height; y++){
-                if (table[x][y] == 0)
+                if (table[x][y] == burnt)
                     g2D.setColor(bgColor);
-                else if (table[x][y] == 1)
+                else if (table[x][y] == tree)
                     g2D.setColor(treeColor);
-                else if (table[x][y] == 2)
+                else if (table[x][y] == fire)
                     g2D.setColor(fireColor);
 
                 g2D.fillRect(x, y, 1, 1);
