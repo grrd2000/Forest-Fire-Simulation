@@ -12,11 +12,15 @@ public class SimulationPanel extends JPanel{
     public SimulationPanel (Grid grid) {
         super();
         this.map = grid;
+        this.setSize(new Dimension(map.width, map.height));
         this.setFocusable(true);
         this.requestFocusInWindow();
         this.addMouseListener(new MainInputHandler(this));
         this.addMouseMotionListener(new MainInputHandler(this));
         this.addKeyListener(new MainInputHandler(this));
+
+        System.out.println(this.getSize());
+
     }
 
     public void paintComponent(Graphics g) {
@@ -31,12 +35,15 @@ public class SimulationPanel extends JPanel{
                     g2D.setColor(map.treeColor);
                 else if (map.table[x][y] == Grid.fire)
                     g2D.setColor(map.fireColor);
-
+                else {
+                    int color = map.table[x][y];
+                    g2D.setColor(new Color(color, color, color));
+                }
                 g2D.fillRect(x, y, 1, 1);
             }
         }
         g2D.dispose();
-        //this.requestFocusInWindow();
+        this.requestFocusInWindow();
     }
 
     public void startTheFire(){

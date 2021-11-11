@@ -12,13 +12,18 @@ public class MainFrame extends JFrame {
 
     SimulationPanel centerPanel;
 
+    private final int hGap = 10;
+    private final int vGap = 10;
+
     MainFrame(Grid map) {
         //ImageIcon icon = new ImageIcon("triangle.png");
 
         centerPanel = new SimulationPanel(map);
 
-        int width = map.width + 20;
-        int height = map.height + 20;
+        int width = map.width + 6 * hGap - 3;
+        int height = map.height + 8 * vGap;
+        System.out.println(map.width + "x" + map.height);
+        System.out.println(width + "x" + height);
         this.setSize(width, height);
         this.setTitle("Game Of Life");
         this.getContentPane().setBackground(Color.DARK_GRAY);
@@ -26,7 +31,7 @@ public class MainFrame extends JFrame {
         this.setResizable(false);
         //this.setIconImage(icon.getImage());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLayout(new BorderLayout(10,10));
+        this.setLayout(new BorderLayout(hGap,vGap));
         this.setVisible(true);
 
         northPanel.setBackground(Color.DARK_GRAY);
@@ -37,11 +42,10 @@ public class MainFrame extends JFrame {
 
         centerPanel.setLayout(new BorderLayout());
 
-        northPanel.setPreferredSize(new Dimension(100,10));
-        westPanel.setPreferredSize(new Dimension(10,100));
-        eastPanel.setPreferredSize(new Dimension(10,100));
-        southPanel.setPreferredSize(new Dimension(100,10));
-        centerPanel.setPreferredSize(new Dimension(100,100));
+        northPanel.setPreferredSize(new Dimension(0,vGap));
+        westPanel.setPreferredSize(new Dimension(hGap,0));
+        eastPanel.setPreferredSize(new Dimension(hGap,0));
+        southPanel.setPreferredSize(new Dimension(0,vGap));
 
         this.add(northPanel, BorderLayout.NORTH);
         this.add(westPanel, BorderLayout.WEST);

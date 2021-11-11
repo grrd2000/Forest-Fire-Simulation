@@ -11,10 +11,9 @@ public class ForestFire {
 
     public ForestFire(String path) throws IOException {
         ImageOperation io = new ImageOperation(new ImageData(path));
-        //io.binarization(200);
-        System.out.println(Arrays.deepToString(io.imageData.dataTable));
+        io.binarization(200);
 
-        new Grid(io.imageData, 30000).exportImage("test");
-        //new MainFrame(new Grid(io.imageData, 30000));
+        //new Grid(io.imageData, 30000).exportImage("test");
+        new MainFrame(new Grid(io.imageData, 30000));
     }
 }

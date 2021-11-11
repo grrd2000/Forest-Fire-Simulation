@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Random;
 
 public class Grid {
@@ -48,7 +49,8 @@ public class Grid {
         this.width = id.width;
         this.height = id.height;
         this.nMax = nMax;
-        this.table = id.dataTable;
+        this.table = new int[width][height];
+        importImageData(id);
         this.tmpTable = new int[width][height];
         dataCopier();
     }
@@ -147,10 +149,23 @@ public class Grid {
             addTree(x, y);
         }
     }
+    private void importImageData(ImageData id) {
+        for (int x = 0; x < width; x++)
+            for (int y = 0; y < height; y++)
+                this.table[x][y] = id.dataTable[x][y];
+    }
 
     public void exportImage(String fileName) throws IOException {
         BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         Graphics2D g2D = bufferedImage.createGraphics();
+
+        for(int x = 0; x < width; x++){
+            for(int y = 0; y < height; y++){
+                int color = table[x][y];
+                g2D.setColor(new Color(color, color, color));
+                g2D.fillRect(x, y, 1, 1);
+            }
+        }
 
         for(int x = 0; x < width; x++){
             for(int y = 0; y < height; y++){
@@ -165,6 +180,7 @@ public class Grid {
             }
         }
         g2D.dispose();
+        System.out.println(Arrays.deepToString(table));
 
         String formatName = "png";
         File file = new File("output/" + fileName + "_" + i + "." + formatName);
