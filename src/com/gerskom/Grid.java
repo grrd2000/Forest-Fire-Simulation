@@ -1,9 +1,5 @@
 package com.gerskom;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
@@ -26,10 +22,11 @@ public class Grid {
     private final float fireBrushSpeed = 6.5f;     //0.9f
     private final float treesBrushSpeed = 14f;     //0.75f
 
-    private final double fireP = 37.5;
-    private final double randomFireP = 0.0000075;
-    private final double resurrectionP = 0.1;
-    private final double burnP = 5.5f;
+    private final double fireP = 42.5;
+    private final double grassFireP = 3.5;
+    private final double randomFireP = 0.000001;
+    private final double resurrectionP = 0.02;
+    private final double burnP = 30;
 
     public Grid(int width, int height, int nMax) {
         this.width = width;
@@ -65,17 +62,35 @@ public class Grid {
                     Random random = new Random();
                     double r = random.nextDouble() * 100;
 
-                    if (tmpTable[x][y] == burnt && resurrectionP >= r)
+                    if ((tmpTable[x][y] == burnt || imageTable[x][y] > 0) && resurrectionP >= r)
                         addTree(x, y);
-                    else if (tmpTable[x][y] == tree && neighbourFireScan(x, y) >= r)
+                    else if (tmpTable[x][y] == tree && neighbourTreesFireScan(x, y) >= r)
                         addFire(x, y);
                     else if (tmpTable[x][y] == fire && burnP >= r)
                         table[x][y] = burnt;
+                    else if (imageTable[x][y] > 0 && neighbourFireScan(x, y) >= r)
+                        addFire(x ,y);
                 }
             }
         }
         i++;
         dataCopier();
+    }
+
+    double neighbourTreesFireScan(int w, int h) {
+        int counter = 0;
+
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                if (!(i == 0 && j == 0)) {
+                    if (tmpTable[w + i][h + j] == fire) {
+                        counter++;
+                    }
+                }
+            }
+        }
+        if (counter == 0) return randomFireP;
+        else return counter * fireP;
     }
 
     double neighbourFireScan(int w, int h) {
@@ -90,8 +105,7 @@ public class Grid {
                 }
             }
         }
-        if (counter == 0) return randomFireP;
-        else return counter * fireP;
+        return counter * grassFireP;
     }
 
     public void dataCopier() {

@@ -25,7 +25,7 @@ public class MainFrame extends JFrame {
         //System.out.println(map.width + "x" + map.height);
         //System.out.println(width + "x" + height);
         this.setSize(width, height);
-        this.setTitle("Game Of Life");
+        this.setTitle("Forest Fire Simulation");
         this.getContentPane().setBackground(Color.DARK_GRAY);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
