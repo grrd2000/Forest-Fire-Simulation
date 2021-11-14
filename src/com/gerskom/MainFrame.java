@@ -16,20 +16,18 @@ public class MainFrame extends JFrame {
     private final int vGap = 10;
 
     MainFrame(Grid map) {
-        //ImageIcon icon = new ImageIcon("triangle.png");
+        ImageIcon icon = new ImageIcon("icon.png");
 
         centerPanel = new SimulationPanel(map);
 
         int width = map.width + 6 * hGap - 3;
         int height = map.height + 8 * vGap;
-        //System.out.println(map.width + "x" + map.height);
-        //System.out.println(width + "x" + height);
         this.setSize(width, height);
         this.setTitle("Forest Fire Simulation");
         this.getContentPane().setBackground(Color.DARK_GRAY);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        //this.setIconImage(icon.getImage());
+        this.setIconImage(icon.getImage());
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout(hGap,vGap));
         this.setVisible(true);

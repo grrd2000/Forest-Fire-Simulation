@@ -1,7 +1,6 @@
 package com.gerskom;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Random;
 
 public class Grid {
@@ -19,8 +18,8 @@ public class Grid {
     public static int fire = -2;
     public static int burnt = -3;
 
-    private final float fireBrushSpeed = 6.5f;     //0.9f
-    private final float treesBrushSpeed = 14f;     //0.75f
+    private final float fireBrushSpeed = 6.5f;
+    private final float treesBrushSpeed = 14f;
 
     private final double fireP = 42.5;
     private final double grassFireP = 3.5;
