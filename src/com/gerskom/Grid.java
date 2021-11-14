@@ -56,8 +56,8 @@ public class Grid {
     }
 
     public void startSimulation() {
-        for(int x = 1; x < width - 1; x++) {
-            for(int y = 1; y < height - 1; y++) {
+        for(int x = 0; x < width; x++) {
+            for(int y = 0; y < height; y++) {
                 if(imageTable[x][y] != 0) {
                     Random random = new Random();
                     double r = random.nextDouble() * 100;
@@ -78,34 +78,126 @@ public class Grid {
     }
 
     double neighbourTreesFireScan(int w, int h) {
-        int counter = 0;
+        int treesOnFire = 0;
 
-        for (int i = -1; i <= 1; i++) {
-            for (int j = -1; j <= 1; j++) {
-                if (!(i == 0 && j == 0)) {
-                    if (tmpTable[w + i][h + j] == fire) {
-                        counter++;
+        if (w != 0 && w != width - 1 && h != 0 && h != height - 1) {
+            for (int i = -1; i <= 1; i++) {
+                for (int j = -1; j <= 1; j++) {
+                    if (!(i == 0 && j == 0)) {
+                        if (tmpTable[w + i][h + j] == fire) {
+                            treesOnFire++;
+                        }
                     }
                 }
             }
         }
-        if (counter == 0) return randomFireP;
-        else return counter * fireP;
+        else if (w == 0 && (h != 0 && h != height - 1)) {
+            for (int i = 0; i <= 1; i++) {
+                for (int j = -1; j <= 1; j++) {
+                    if (!(i == 0 && j == 0)) {
+                        if (tmpTable[w + i][h + j] == fire) {
+                            treesOnFire++;
+                        }
+                    }
+                }
+            }
+        }
+        else if (w == width - 1 && (h != 0 && h != height - 1)) {
+            for (int i = -1; i <= 0; i++) {
+                for (int j = -1; j <= 1; j++) {
+                    if (!(i == 0 && j == 0)) {
+                        if (tmpTable[w + i][h + j] == fire) {
+                            treesOnFire++;
+                        }
+                    }
+                }
+            }
+        }
+        else if (h == 0 && (w != 0 && w != width - 1)) {
+            for (int i = -1; i <= 1; i++) {
+                for (int j = 0; j <= 1; j++) {
+                    if (!(i == 0 && j == 0)) {
+                        if (tmpTable[w + i][h + j] == fire) {
+                            treesOnFire++;
+                        }
+                    }
+                }
+            }
+        }
+        else if (h == height - 1 && (w != 0 && w != width - 1)) {
+            for (int i = -1; i <= 1; i++) {
+                for (int j = -1; j <= 0; j++) {
+                    if (!(i == 0 && j == 0)) {
+                        if (tmpTable[w + i][h + j] == fire) {
+                            treesOnFire++;
+                        }
+                    }
+                }
+            }
+        }
+        if (treesOnFire == 0) return randomFireP;
+        else return treesOnFire * fireP;
     }
 
     double neighbourFireScan(int w, int h) {
-        int counter = 0;
+        int onFire = 0;
 
-        for (int i = -1; i <= 1; i++) {
-            for (int j = -1; j <= 1; j++) {
-                if (!(i == 0 && j == 0)) {
-                    if (tmpTable[w + i][h + j] == fire) {
-                        counter++;
+        if (w != 0 && w != width - 1 && h != 0 && h != height - 1) {
+            for (int i = -1; i <= 1; i++) {
+                for (int j = -1; j <= 1; j++) {
+                    if (!(i == 0 && j == 0)) {
+                        if (tmpTable[w + i][h + j] == fire) {
+                            onFire++;
+                        }
                     }
                 }
             }
         }
-        return counter * grassFireP;
+        else if (w == 0 && (h != 0 && h != height - 1)) {
+            for (int i = 0; i <= 1; i++) {
+                for (int j = -1; j <= 1; j++) {
+                    if (!(i == 0 && j == 0)) {
+                        if (tmpTable[w + i][h + j] == fire) {
+                            onFire++;
+                        }
+                    }
+                }
+            }
+        }
+        else if (w == width - 1 && (h != 0 && h != height - 1)) {
+            for (int i = -1; i <= 0; i++) {
+                for (int j = -1; j <= 1; j++) {
+                    if (!(i == 0 && j == 0)) {
+                        if (tmpTable[w + i][h + j] == fire) {
+                            onFire++;
+                        }
+                    }
+                }
+            }
+        }
+        else if (h == 0 && (w != 0 && w != width - 1)) {
+            for (int i = -1; i <= 1; i++) {
+                for (int j = 0; j <= 1; j++) {
+                    if (!(i == 0 && j == 0)) {
+                        if (tmpTable[w + i][h + j] == fire) {
+                            onFire++;
+                        }
+                    }
+                }
+            }
+        }
+        else if (h == height - 1 && (w != 0 && w != width - 1)) {
+            for (int i = -1; i <= 1; i++) {
+                for (int j = -1; j <= 0; j++) {
+                    if (!(i == 0 && j == 0)) {
+                        if (tmpTable[w + i][h + j] == fire) {
+                            onFire++;
+                        }
+                    }
+                }
+            }
+        }
+        return onFire * grassFireP;
     }
 
     public void dataCopier() {
@@ -133,7 +225,7 @@ public class Grid {
                 int y = (int)(r * Math.sin(a));
 
                 if (treesBrushSpeed >= rand)
-                    if ((x + xCor) > 0 && (x + xCor) < width && (y + yCor) > 0 && (y + yCor) < height)
+                    if ((x + xCor) >= 0 && (x + xCor) <= width && (y + yCor) >= 0 && (y + yCor) <= height)
                         addTree(x + xCor, y + yCor);
             }
         }
@@ -149,7 +241,7 @@ public class Grid {
                 int y = (int)(r * Math.sin(a));
 
                 if (fireBrushSpeed >= rand)
-                    if ((x + xCor) > 0 && (x + xCor) < width && (y + yCor) > 0 && (y + yCor) < height)
+                    if ((x + xCor) >= 0 && (x + xCor) <= width && (y + yCor) >= 0 && (y + yCor) <= height)
                         addFire(x + xCor, y + yCor);
             }
         }
@@ -158,8 +250,8 @@ public class Grid {
     public void addInitialRandomTrees() {
         for(int c = 0; c < nMax; c++) {
             Random ran = new Random();
-            int x = ran.nextInt(width - 2) + 1;
-            int y = ran.nextInt(height - 2) + 1;
+            int x = ran.nextInt(width);
+            int y = ran.nextInt(height);
             addTree(x, y);
         }
     }

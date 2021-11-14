@@ -18,7 +18,7 @@ public class SimulationPanel extends JPanel{
     private Color fireColor = new Color(227, 92, 7);
     private Color treeColor = new Color(72, 136, 42);
     private  Color water = new Color(143, 181, 225);
-    private  Color grass = new Color(169, 206, 70);
+    private  Color grass = new Color(152, 180, 74);
 
     public SimulationPanel (Grid grid) {
         super();
