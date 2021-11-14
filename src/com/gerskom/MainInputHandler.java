@@ -34,7 +34,7 @@ public class MainInputHandler implements KeyListener, MouseListener, MouseMotion
             }
             case 'f' -> {
                 try {
-                    simulationPanel.map.exportImage("forest_fire");
+                    simulationPanel.exportImage("forest_fire");
                     System.out.println("~FRAME EXPORTED~");
                 } catch (IOException ex) {
                     ex.printStackTrace();

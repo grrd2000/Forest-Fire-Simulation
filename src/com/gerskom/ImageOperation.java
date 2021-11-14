@@ -16,6 +16,5 @@ public class ImageOperation {
                     imageData.dataTable[x][y] = 255;
             }
         }
-
     }
 }

@@ -16,23 +16,20 @@ public class Grid {
     private final int[][] tmpTable;
     public final int[][] imageTable;
     public int[][] inputImageTable;
-    public final Color bgColor = new Color(50, 50, 50);
-    public final Color fireColor = new Color(250, 110, 0);
-    public final Color treeColor = new Color(110, 125, 40);
 
-    private int i = 0;
+    public int i = 0;
 
     public static int tree = -1;
     public static int fire = -2;
     public static int burnt = -3;
 
-    private final float fireBrushSpeed = 6.5f;       //0.9f
+    private final float fireBrushSpeed = 6.5f;     //0.9f
     private final float treesBrushSpeed = 14f;     //0.75f
 
     private final double fireP = 37.5;
     private final double randomFireP = 0.0000075;
-    private final double resurrectionP = 0.00075; //0.0005
-    private final double burnP = 1.75;
+    private final double resurrectionP = 0.1;
+    private final double burnP = 5.5f;
 
     public Grid(int width, int height, int nMax) {
         this.width = width;
@@ -129,7 +126,7 @@ public class Grid {
     }
 
     public void addBrushOfFire(int xCor, int yCor, float size) {
-        for (double r = 3; r <= size / 2; r += 1.5) {           //żadzenie punktów wraz z promieniem
+        for (double r = 3; r <= size / 2; r += 1.5) {
             for (double a = 0; a < 2 * Math.PI; a += 0.05) {
                 Random random = new Random();
                 float rand = 100 * random.nextFloat();
@@ -163,29 +160,5 @@ public class Grid {
         this.inputImageTable = bg.dataTable;
     }
 
-    public void exportImage(String fileName) throws IOException {
-        BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-        Graphics2D g2D = bufferedImage.createGraphics();
 
-        for(int x = 0; x < width; x++){
-            for(int y = 0; y < height; y++){
-                if (table[x][y] == Grid.burnt)
-                    g2D.setColor(bgColor);
-                else if (table[x][y] == Grid.tree)
-                    g2D.setColor(treeColor);
-                else if (table[x][y] == Grid.fire)
-                    g2D.setColor(fireColor);
-                else {
-                    int color = imageTable[x][y];
-                    g2D.setColor(new Color(color, color, color));
-                }
-                g2D.fillRect(x, y, 1, 1);
-            }
-        }
-        g2D.dispose();
-
-        String formatName = "png";
-        File file = new File("output/" + fileName + "_" + i + "." + formatName);
-        ImageIO.write(bufferedImage, formatName, file);
-    }
 }
