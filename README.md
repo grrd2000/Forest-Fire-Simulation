@@ -9,7 +9,15 @@ College project on discrete modeling using cellular automata and various image t
 </p>
 
 * The terrain image from google maps is binarized to separate the non-flammable terrain from the rest by the specified key.
-* For a more logical and realistic simulation, the image is dilated - removal of small, isolated objects, as well as smoothing out the contours of a binary image. 
+<p align="center">
+    <img src="./output/binarized_map.bmp">
+</p>
+
+* For a more logical and realistic simulation, the image is dilated - removal of small, isolated objects, as well as smoothing out the contours of a binary image.
+<p align="center">
+    <img src="./output/dilated_map.bmp">
+</p>
+
 * Simulating a forest fire using cellular automata in a regular window application to create and refine probability coefficients.
 * Joining all the steps together.
 
