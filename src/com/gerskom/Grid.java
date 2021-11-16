@@ -1,6 +1,7 @@
 package com.gerskom;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Random;
 
 public class Grid {
@@ -37,6 +38,9 @@ public class Grid {
                 this.table[x][y] = burnt;
         this.tmpTable = new int[width][height];
         this.imageTable = new int[width][height];
+        for (int x = 0; x < width; x++)
+            for (int y = 0; y < height; y++)
+                this.imageTable[x][y] = burnt;
         this.inputImageTable = new int[width][height];
         dataCopier();
     }
@@ -61,8 +65,9 @@ public class Grid {
                     Random random = new Random();
                     double r = random.nextDouble() * 100;
 
-                    if ((tmpTable[x][y] == burnt || imageTable[x][y] > 0) && resurrectionP >= r)
+                    if ((tmpTable[x][y] == burnt || imageTable[x][y] > 0) && resurrectionP >= r) {
                         addTree(x, y);
+                    }
                     else if (tmpTable[x][y] == tree && neighbourTreesFireScan(x, y) >= r)
                         addFire(x, y);
                     else if (tmpTable[x][y] == fire && burnP >= r)

@@ -31,6 +31,7 @@ public class MainInputHandler implements KeyListener, MouseListener, MouseMotion
             case 'r' -> {
                 simulationPanel.map.addInitialRandomTrees();
                 simulationPanel.repaint();
+                System.out.println("NEW RANDOM TREES!");
             }
             case 'f' -> {
                 try {
