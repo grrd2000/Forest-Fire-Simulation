@@ -264,6 +264,4 @@ public class Grid {
         ImageData bg = new ImageData("input/input_map.bmp");
         this.inputImageTable = bg.dataTable;
     }
-
-
 }
