@@ -1,7 +1,6 @@
 package com.gerskom;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Random;
 
 public class Grid {
@@ -18,15 +17,16 @@ public class Grid {
     public static int tree = -1;
     public static int fire = -2;
     public static int burnt = -3;
+    public static int grass = 255;
 
     private final float fireBrushSpeed = 6.5f;
     private final float treesBrushSpeed = 14f;
 
     private final double fireP = 42.5;
-    private final double grassFireP = 3.5;
+    private final double grassFireP = 4.75;         //4.75
     private final double randomFireP = 0.000001;
-    private final double resurrectionP = 0.02;
-    private final double burnP = 30;
+    private final double resurrectionP = 0.001;
+    private final double burntP = 30;
 
     public Grid(int width, int height, int nMax) {
         this.width = width;
@@ -65,15 +65,14 @@ public class Grid {
                     Random random = new Random();
                     double r = random.nextDouble() * 100;
 
-                    if ((tmpTable[x][y] == burnt || imageTable[x][y] > 0) && resurrectionP >= r) {
+                    if ((tmpTable[x][y] == burnt || imageTable[x][y] == grass) && resurrectionP >= r)
                         addTree(x, y);
-                    }
                     else if (tmpTable[x][y] == tree && neighbourTreesFireScan(x, y) >= r)
                         addFire(x, y);
-                    else if (tmpTable[x][y] == fire && burnP >= r)
+                    else if (tmpTable[x][y] == fire && burntP >= r)
                         table[x][y] = burnt;
-                    else if (imageTable[x][y] > 0 && neighbourFireScan(x, y) >= r)
-                        addFire(x ,y);
+                    else if (imageTable[x][y] == grass && neighbourFireScan(x, y) >= r)
+                        addFire(x, y);
                 }
             }
         }

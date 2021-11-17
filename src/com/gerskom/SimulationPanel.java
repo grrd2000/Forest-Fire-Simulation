@@ -14,17 +14,17 @@ public class SimulationPanel extends JPanel{
 
     private int deltaTime = 30;
 
-    private Color bgColor = new Color(86, 43, 35);
-    private Color fireColor = new Color(227, 92, 7);
-    private Color treeColor = new Color(72, 136, 42);
-    private  Color water = new Color(143, 181, 225);
-    private  Color grass = new Color(152, 180, 74);
-
     //private Color bgColor = new Color(86, 43, 35);
     //private Color fireColor = new Color(227, 92, 7);
     //private Color treeColor = new Color(72, 136, 42);
-    //private  Color water = new Color(50, 50, 50);
-    //private  Color grass = new Color(225, 225, 225);
+    //private  Color water = new Color(143, 181, 225);
+    //private  Color grass = new Color(152, 180, 74);
+
+    private  Color water = new Color(50, 50, 50);
+    private Color bgColor = new Color(110, 110, 110);
+    private Color treeColor = new Color(170, 170, 170);
+    private  Color grass = new Color(225, 225, 225);
+    private Color fireColor = new Color(255, 38, 0);
 
     public SimulationPanel (Grid grid) {
         super();
