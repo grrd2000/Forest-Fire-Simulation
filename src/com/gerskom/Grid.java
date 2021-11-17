@@ -12,6 +12,7 @@ public class Grid {
     public final int[][] imageTable;
     public int[][] inputImageTable;
 
+    public double dice;
     public int i = 0;
 
     public static int tree = -1;
@@ -19,14 +20,16 @@ public class Grid {
     public static int burnt = -3;
     public static int grass = 255;
 
-    private final float fireBrushSpeed = 6.5f;
+    private final float fireBrushSpeed = 7f;
     private final float treesBrushSpeed = 14f;
 
     private final double fireP = 22.5;
-    private final double grassFireP = 14;         //17.5
+    private final double grassFireP = 14;
     private final double randomFireP = 0.000001;
     private final double resurrectionP = 0.001;
     private final double burntP = 10;
+
+    private final Wind wind;
 
     public Grid(int width, int height, int nMax) {
         this.width = width;
@@ -42,6 +45,7 @@ public class Grid {
             for (int y = 0; y < height; y++)
                 this.imageTable[x][y] = burnt;
         this.inputImageTable = new int[width][height];
+        this.wind = new Wind();
         dataCopier();
     }
 
@@ -53,6 +57,7 @@ public class Grid {
         this.tmpTable = new int[width][height];
         this.imageTable = new int[width][height];
         this.inputImageTable = new int[width][height];
+        this.wind = new Wind();
         backgroundImage();
         importImageData(id);
         dataCopier();
@@ -63,15 +68,15 @@ public class Grid {
             for(int y = 0; y < height; y++) {
                 if(imageTable[x][y] != 0) {
                     Random random = new Random();
-                    double r = random.nextDouble() * 100;
+                    dice = random.nextDouble() * 100;
 
-                    if ((tmpTable[x][y] == burnt || imageTable[x][y] == grass) && resurrectionP >= r)
+                    if ((tmpTable[x][y] == burnt || imageTable[x][y] == grass) && resurrectionP >= dice)
                         addTree(x, y);
-                    else if (tmpTable[x][y] == tree && neighbourTreesFireScan(x, y) >= r)
+                    else if (tmpTable[x][y] == tree && neighbourTreesFireScan(x, y) >= dice)
                         addFire(x, y);
-                    else if (tmpTable[x][y] == fire && burntP >= r)
+                    else if (tmpTable[x][y] == fire && burntP >= dice)
                         table[x][y] = burnt;
-                    else if (imageTable[x][y] == grass && neighbourFireScan(x, y) >= r)
+                    else if (imageTable[x][y] == grass && neighbourFireScan(x, y) >= dice)
                         addFire(x, y);
                 }
             }
@@ -84,62 +89,46 @@ public class Grid {
         int treesOnFire = 0;
 
         if (w != 0 && w != width - 1 && h != 0 && h != height - 1) {
-            for (int i = -1; i <= 1; i++) {
-                for (int j = -1; j <= 1; j++) {
-                    if (!(i == 0 && j == 0)) {
-                        if (tmpTable[w + i][h + j] == fire) {
+            for (int i = -1; i <= 1; i++)
+                for (int j = -1; j <= 1; j++)
+                    if (!(i == 0 && j == 0))
+                        if (tmpTable[w + i][h + j] == fire)
                             treesOnFire++;
-                        }
-                    }
-                }
-            }
         }
         else if (w == 0 && (h != 0 && h != height - 1)) {
-            for (int i = 0; i <= 1; i++) {
-                for (int j = -1; j <= 1; j++) {
-                    if (!(i == 0 && j == 0)) {
-                        if (tmpTable[w + i][h + j] == fire) {
+            for (int i = 0; i <= 1; i++)
+                for (int j = -1; j <= 1; j++)
+                    if (!(i == 0 && j == 0))
+                        if (tmpTable[w + i][h + j] == fire)
                             treesOnFire++;
-                        }
-                    }
-                }
-            }
         }
         else if (w == width - 1 && (h != 0 && h != height - 1)) {
-            for (int i = -1; i <= 0; i++) {
-                for (int j = -1; j <= 1; j++) {
-                    if (!(i == 0 && j == 0)) {
-                        if (tmpTable[w + i][h + j] == fire) {
+            for (int i = -1; i <= 0; i++)
+                for (int j = -1; j <= 1; j++)
+                    if (!(i == 0 && j == 0))
+                        if (tmpTable[w + i][h + j] == fire)
                             treesOnFire++;
-                        }
-                    }
-                }
-            }
         }
         else if (h == 0 && (w != 0 && w != width - 1)) {
-            for (int i = -1; i <= 1; i++) {
-                for (int j = 0; j <= 1; j++) {
-                    if (!(i == 0 && j == 0)) {
-                        if (tmpTable[w + i][h + j] == fire) {
+            for (int i = -1; i <= 1; i++)
+                for (int j = 0; j <= 1; j++)
+                    if (!(i == 0 && j == 0))
+                        if (tmpTable[w + i][h + j] == fire)
                             treesOnFire++;
-                        }
-                    }
-                }
-            }
         }
         else if (h == height - 1 && (w != 0 && w != width - 1)) {
-            for (int i = -1; i <= 1; i++) {
-                for (int j = -1; j <= 0; j++) {
-                    if (!(i == 0 && j == 0)) {
-                        if (tmpTable[w + i][h + j] == fire) {
+            for (int i = -1; i <= 1; i++)
+                for (int j = -1; j <= 0; j++)
+                    if (!(i == 0 && j == 0))
+                        if (tmpTable[w + i][h + j] == fire)
                             treesOnFire++;
-                        }
-                    }
-                }
-            }
         }
-        if (treesOnFire == 0) return randomFireP;
-        else return treesOnFire * fireP;
+        if(treesOnFire * fireP <= 100) {
+            if (treesOnFire == 0) return randomFireP;
+            else return treesOnFire * fireP;
+        }
+        else
+            return 100;
     }
 
     double neighbourFireScan(int w, int h) {
@@ -180,7 +169,10 @@ public class Grid {
                         if (tmpTable[w + i][h + j] == fire)
                             onFire++;
         }
-        return onFire * grassFireP;
+        if (onFire * grassFireP <= 100)
+            return onFire * grassFireP;
+        else
+            return 100;
     }
 
     public void dataCopier() {
