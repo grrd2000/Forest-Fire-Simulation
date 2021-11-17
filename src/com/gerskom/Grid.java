@@ -22,11 +22,11 @@ public class Grid {
     private final float fireBrushSpeed = 6.5f;
     private final float treesBrushSpeed = 14f;
 
-    private final double fireP = 42.5;
-    private final double grassFireP = 4.75;         //4.75
+    private final double fireP = 22.5;
+    private final double grassFireP = 14;         //17.5
     private final double randomFireP = 0.000001;
     private final double resurrectionP = 0.001;
-    private final double burntP = 30;
+    private final double burntP = 10;
 
     public Grid(int width, int height, int nMax) {
         this.width = width;
@@ -146,59 +146,39 @@ public class Grid {
         int onFire = 0;
 
         if (w != 0 && w != width - 1 && h != 0 && h != height - 1) {
-            for (int i = -1; i <= 1; i++) {
-                for (int j = -1; j <= 1; j++) {
-                    if (!(i == 0 && j == 0)) {
-                        if (tmpTable[w + i][h + j] == fire) {
+            for (int i = -1; i <= 1; i++)
+                for (int j = -1; j <= 1; j++)
+                    if (!(i == 0 && j == 0))
+                        if (tmpTable[w + i][h + j] == fire)
                             onFire++;
-                        }
-                    }
-                }
-            }
         }
         else if (w == 0 && (h != 0 && h != height - 1)) {
-            for (int i = 0; i <= 1; i++) {
-                for (int j = -1; j <= 1; j++) {
-                    if (!(i == 0 && j == 0)) {
-                        if (tmpTable[w + i][h + j] == fire) {
+            for (int i = 0; i <= 1; i++)
+                for (int j = -1; j <= 1; j++)
+                    if (!(i == 0 && j == 0))
+                        if (tmpTable[w + i][h + j] == fire)
                             onFire++;
-                        }
-                    }
-                }
-            }
         }
         else if (w == width - 1 && (h != 0 && h != height - 1)) {
-            for (int i = -1; i <= 0; i++) {
-                for (int j = -1; j <= 1; j++) {
-                    if (!(i == 0 && j == 0)) {
-                        if (tmpTable[w + i][h + j] == fire) {
+            for (int i = -1; i <= 0; i++)
+                for (int j = -1; j <= 1; j++)
+                    if (!(i == 0 && j == 0))
+                        if (tmpTable[w + i][h + j] == fire)
                             onFire++;
-                        }
-                    }
-                }
-            }
         }
         else if (h == 0 && (w != 0 && w != width - 1)) {
-            for (int i = -1; i <= 1; i++) {
-                for (int j = 0; j <= 1; j++) {
-                    if (!(i == 0 && j == 0)) {
-                        if (tmpTable[w + i][h + j] == fire) {
+            for (int i = -1; i <= 1; i++)
+                for (int j = 0; j <= 1; j++)
+                    if (!(i == 0 && j == 0))
+                        if (tmpTable[w + i][h + j] == fire)
                             onFire++;
-                        }
-                    }
-                }
-            }
         }
         else if (h == height - 1 && (w != 0 && w != width - 1)) {
-            for (int i = -1; i <= 1; i++) {
-                for (int j = -1; j <= 0; j++) {
-                    if (!(i == 0 && j == 0)) {
-                        if (tmpTable[w + i][h + j] == fire) {
+            for (int i = -1; i <= 1; i++)
+                for (int j = -1; j <= 0; j++)
+                    if (!(i == 0 && j == 0))
+                        if (tmpTable[w + i][h + j] == fire)
                             onFire++;
-                        }
-                    }
-                }
-            }
         }
         return onFire * grassFireP;
     }
@@ -209,13 +189,17 @@ public class Grid {
     }
 
     public void addTree(int xCor, int yCor) {
-        if(imageTable[xCor][yCor] != 0)
+        if(imageTable[xCor][yCor] != 0) {
             this.table[xCor][yCor] = tree;
+            this.imageTable[xCor][yCor] = -1;
+        }
     }
 
     public void addFire(int xCor, int yCor) {
-        if(imageTable[xCor][yCor] != 0)
+        if(imageTable[xCor][yCor] != 0) {
             this.table[xCor][yCor] = fire;
+            this.imageTable[xCor][yCor] = -1;
+        }
     }
 
     public void addBrushOfTrees(int xCor, int yCor, float size) {

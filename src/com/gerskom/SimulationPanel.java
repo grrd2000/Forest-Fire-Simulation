@@ -12,7 +12,7 @@ public class SimulationPanel extends JPanel{
     public boolean pause = true;
     public boolean started = false;
 
-    private int deltaTime = 30;
+    private int deltaTime = 20;
 
     //private Color bgColor = new Color(86, 43, 35);
     //private Color fireColor = new Color(227, 92, 7);
