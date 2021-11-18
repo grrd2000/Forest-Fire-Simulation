@@ -57,7 +57,8 @@ public class Grid {
         this.tmpTable = new int[width][height];
         this.imageTable = new int[width][height];
         this.inputImageTable = new int[width][height];
-        this.wind = new Wind();
+        this.wind = new Wind("NE");
+        System.out.println(wind.dirString);
         backgroundImage();
         importImageData(id);
         dataCopier();
@@ -93,86 +94,79 @@ public class Grid {
                 for (int j = -1; j <= 1; j++)
                     if (!(i == 0 && j == 0))
                         if (tmpTable[w + i][h + j] == fire)
-                            treesOnFire++;
+                            treesOnFire += fireP + wind.windEffect[i + 1][j + 1];
         }
         else if (w == 0 && (h != 0 && h != height - 1)) {
             for (int i = 0; i <= 1; i++)
                 for (int j = -1; j <= 1; j++)
                     if (!(i == 0 && j == 0))
                         if (tmpTable[w + i][h + j] == fire)
-                            treesOnFire++;
+                            treesOnFire += fireP + wind.windEffect[i + 1][j + 1];
         }
         else if (w == width - 1 && (h != 0 && h != height - 1)) {
             for (int i = -1; i <= 0; i++)
                 for (int j = -1; j <= 1; j++)
                     if (!(i == 0 && j == 0))
                         if (tmpTable[w + i][h + j] == fire)
-                            treesOnFire++;
+                            treesOnFire += fireP + wind.windEffect[i + 1][j + 1];
         }
         else if (h == 0 && (w != 0 && w != width - 1)) {
             for (int i = -1; i <= 1; i++)
                 for (int j = 0; j <= 1; j++)
                     if (!(i == 0 && j == 0))
                         if (tmpTable[w + i][h + j] == fire)
-                            treesOnFire++;
+                            treesOnFire += fireP + wind.windEffect[i + 1][j + 1];
         }
         else if (h == height - 1 && (w != 0 && w != width - 1)) {
             for (int i = -1; i <= 1; i++)
                 for (int j = -1; j <= 0; j++)
                     if (!(i == 0 && j == 0))
                         if (tmpTable[w + i][h + j] == fire)
-                            treesOnFire++;
+                            treesOnFire += fireP + wind.windEffect[i + 1][j + 1];
         }
-        if(treesOnFire * fireP <= 100) {
-            if (treesOnFire == 0) return randomFireP;
-            else return treesOnFire * fireP;
-        }
-        else
-            return 100;
+        if (treesOnFire == 0) return randomFireP;
+        return Math.min(treesOnFire, 100);
     }
 
     double neighbourFireScan(int w, int h) {
-        int onFire = 0;
+        double grassOnFire = 0;
 
         if (w != 0 && w != width - 1 && h != 0 && h != height - 1) {
             for (int i = -1; i <= 1; i++)
                 for (int j = -1; j <= 1; j++)
                     if (!(i == 0 && j == 0))
                         if (tmpTable[w + i][h + j] == fire)
-                            onFire++;
+                            grassOnFire += grassFireP + wind.windEffect[i + 1][j + 1];
         }
         else if (w == 0 && (h != 0 && h != height - 1)) {
             for (int i = 0; i <= 1; i++)
                 for (int j = -1; j <= 1; j++)
                     if (!(i == 0 && j == 0))
                         if (tmpTable[w + i][h + j] == fire)
-                            onFire++;
+                            grassOnFire += grassFireP + wind.windEffect[i + 1][j + 1];
         }
         else if (w == width - 1 && (h != 0 && h != height - 1)) {
             for (int i = -1; i <= 0; i++)
                 for (int j = -1; j <= 1; j++)
                     if (!(i == 0 && j == 0))
                         if (tmpTable[w + i][h + j] == fire)
-                            onFire++;
+                            grassOnFire += grassFireP + wind.windEffect[i + 1][j + 1];
         }
         else if (h == 0 && (w != 0 && w != width - 1)) {
             for (int i = -1; i <= 1; i++)
                 for (int j = 0; j <= 1; j++)
                     if (!(i == 0 && j == 0))
                         if (tmpTable[w + i][h + j] == fire)
-                            onFire++;
+                            grassOnFire += grassFireP + wind.windEffect[i + 1][j + 1];
         }
         else if (h == height - 1 && (w != 0 && w != width - 1)) {
             for (int i = -1; i <= 1; i++)
                 for (int j = -1; j <= 0; j++)
                     if (!(i == 0 && j == 0))
                         if (tmpTable[w + i][h + j] == fire)
-                            onFire++;
+                            grassOnFire += grassFireP + wind.windEffect[i + 1][j + 1];
         }
-        if (onFire * grassFireP <= 100)
-            return onFire * grassFireP;
-        else
-            return 100;
+        return Math.min(grassOnFire, 100);
     }
 
     public void dataCopier() {
