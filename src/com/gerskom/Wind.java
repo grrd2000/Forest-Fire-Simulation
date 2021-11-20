@@ -1,7 +1,6 @@
 package com.gerskom;
 
 import java.text.DecimalFormat;
-import java.util.Arrays;
 import java.util.Random;
 
 public class Wind {
@@ -19,13 +18,13 @@ public class Wind {
     Wind() {
         Random random = new Random();
         this.direction = random.nextInt(7) + 1;
-        this.windPower = random.nextFloat() * 1.75f + 2.25f;
+        this.windPower = random.nextFloat() * 2.8f + 2.2f;
 
         MAIN = windPower;
-        nextToMain = MAIN / 5f;
-        nMAIN = -MAIN * 10f;
-        nNextToMain = nMAIN / 5f;
-        ninetyToMain = MAIN / 25f;
+        nextToMain = windPower / 5f;
+        nMAIN = -windPower * 7.5f;
+        nNextToMain = -windPower * 2f;
+        ninetyToMain = -windPower;
 
         switch (direction) {
             case 1 -> windEffect = new float[][] {  {nNextToMain,   ninetyToMain,   nextToMain},
@@ -63,22 +62,39 @@ public class Wind {
             default -> throw new IllegalStateException("Unexpected value: " + direction);
         }
 
-
-
         printWind(direction, windPower);
     }
     Wind(String dirString) {
         this.dirString = dirString;
 
         Random random = new Random();
-        this.direction = random.nextInt(7) + 1;
-        this.windPower = random.nextFloat() * 1.75f + 2.25f;
+        this.windPower = random.nextFloat() * 2.8f + 2.2f;
 
         MAIN = windPower;
-        nextToMain = MAIN / 5f;
-        nMAIN = -MAIN * 10f;
-        nNextToMain = nMAIN / 5f;
-        ninetyToMain = MAIN / 25f;
+        nextToMain = windPower / 5f;
+        nMAIN = -windPower * 7.5f;
+        nNextToMain = -windPower * 2f;
+        ninetyToMain = -windPower;
+
+        //windEffect = new float[][] {    {nextToMain,    ninetyToMain,   nNextToMain},         //w dół
+        //        {MAIN,          0,              nMAIN},
+        //        {nextToMain,    ninetyToMain,   nNextToMain}};
+
+        //windEffect = new float[][] {    {nextToMain,    MAIN,   nextToMain},                  //w prawo
+        //         {ninetyToMain,          0,              ninetyToMain},
+        //         {nNextToMain,    nMAIN,   nNextToMain}};
+
+        //windEffect = new float[][] {    {nNextToMain,   ninetyToMain,   nextToMain},            //w góre
+        //        {nMAIN,         0,              MAIN},
+        //        {nNextToMain,   ninetyToMain,   nextToMain}};
+
+        //windEffect = new float[][] {    {nNextToMain,   nMAIN,      nNextToMain},               //w lewo
+        //        {ninetyToMain,   0,           ninetyToMain},
+        //        {nextToMain,     MAIN,        nextToMain}};
+
+        //System.out.println(MAIN);
+        //System.out.println(windEffect[1][0]);
+        //System.out.println(Arrays.deepToString(windEffect));
 
         switch (dirString) {
             case "E" -> windEffect = new float[][] {    {nNextToMain,   ninetyToMain,   nextToMain},

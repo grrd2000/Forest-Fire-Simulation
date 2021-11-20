@@ -23,11 +23,11 @@ public class Grid {
     private final float fireBrushSpeed = 7f;
     private final float treesBrushSpeed = 14f;
 
-    private final double fireP = 22.5;
-    private final double grassFireP = 14;
+    private final double fireP = 21;
+    private final double grassFireP = 12;
     private final double randomFireP = 0.000001;
     private final double resurrectionP = 0.001;
-    private final double burntP = 10;
+    private final double burntP = 9;
 
     private final Wind wind;
 
@@ -57,7 +57,7 @@ public class Grid {
         this.tmpTable = new int[width][height];
         this.imageTable = new int[width][height];
         this.inputImageTable = new int[width][height];
-        this.wind = new Wind("W");
+        this.wind = new Wind();
         backgroundImage();
         importImageData(id);
         dataCopier();
@@ -123,7 +123,7 @@ public class Grid {
                         if (tmpTable[w + i][h + j] == fire)
                             treesOnFire += fireP + wind.windEffect[i + 1][j + 1];
         }
-        if (treesOnFire == 0) return randomFireP;
+        if (treesOnFire <= 0) return randomFireP;
         return Math.min(treesOnFire, 100);
     }
 
@@ -165,7 +165,8 @@ public class Grid {
                         if (tmpTable[w + i][h + j] == fire)
                             grassOnFire += grassFireP + wind.windEffect[i + 1][j + 1];
         }
-        return Math.min(grassOnFire, 100);
+        if(grassOnFire <= 0) return  0;
+        else return Math.min(grassOnFire, 100);
     }
 
     public void dataCopier() {
