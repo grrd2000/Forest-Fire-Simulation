@@ -18,7 +18,7 @@ public class Wind {
     Wind() {
         Random random = new Random();
         this.direction = random.nextInt(7) + 1;
-        this.windPower = random.nextFloat() * 2.8f + 2.2f;
+        this.windPower = random.nextFloat() * 5f + 0.5f;
 
         MAIN = windPower;
         nextToMain = windPower / 5f;
@@ -68,7 +68,7 @@ public class Wind {
         this.dirString = dirString;
 
         Random random = new Random();
-        this.windPower = random.nextFloat() * 2.8f + 2.2f;
+        this.windPower = random.nextFloat() * 5f + 0.5f;
 
         MAIN = windPower;
         nextToMain = windPower / 5f;
@@ -97,44 +97,40 @@ public class Wind {
         //System.out.println(Arrays.deepToString(windEffect));
 
         switch (dirString) {
-            case "E" -> windEffect = new float[][] {    {nNextToMain,   ninetyToMain,   nextToMain},
+            case "W" -> windEffect = new float[][] {    {nNextToMain,   ninetyToMain,   nextToMain},
                                                         {nMAIN,         0,              MAIN},
                                                         {nNextToMain,   ninetyToMain,   nextToMain}};
 
-            case "SE" -> windEffect = new float[][] {   {nMAIN,        nNextToMain,    ninetyToMain},
+            case "NW" -> windEffect = new float[][] {   {nMAIN,        nNextToMain,    ninetyToMain},
                                                         {nNextToMain,   0,              nextToMain},
                                                         {ninetyToMain,   nextToMain,     MAIN}};
 
-            case "S" -> windEffect = new float[][] {    {nNextToMain,   nMAIN,      nNextToMain},
+            case "N" -> windEffect = new float[][] {    {nNextToMain,   nMAIN,      nNextToMain},
                                                         {ninetyToMain,   0,           ninetyToMain},
                                                         {nextToMain,     MAIN,        nextToMain}};
 
-            case "SW" -> windEffect = new float[][] {   {ninetyToMain,  nNextToMain,    nMAIN},
+            case "NE" -> windEffect = new float[][] {   {ninetyToMain,  nNextToMain,    nMAIN},
                                                         {nextToMain,    0,               nNextToMain},
                                                         {MAIN,          nextToMain,      ninetyToMain}};
 
-            case "W" -> windEffect = new float[][] {    {nextToMain,    ninetyToMain,   nNextToMain},
+            case "E" -> windEffect = new float[][] {    {nextToMain,    ninetyToMain,   nNextToMain},
                                                         {MAIN,          0,              nMAIN},
                                                         {nextToMain,    ninetyToMain,   nNextToMain}};
 
-            case "NW" -> windEffect = new float[][] {   {MAIN,          nextToMain,      ninetyToMain},
+            case "SE" -> windEffect = new float[][] {   {MAIN,          nextToMain,      ninetyToMain},
                                                         {nextToMain,    0,               nNextToMain},
                                                         {ninetyToMain,  nNextToMain,    nMAIN}};
 
-            case "N" -> windEffect = new float[][] {    {nextToMain,     MAIN,       nextToMain},
+            case "S" -> windEffect = new float[][] {    {nextToMain,     MAIN,       nextToMain},
                                                         {ninetyToMain,   0,          ninetyToMain},
                                                         {nNextToMain,   nMAIN,     nNextToMain}};
 
-            case "NE" -> windEffect = new float[][] {   {ninetyToMain,   nextToMain,      MAIN},
+            case "SW" -> windEffect = new float[][] {   {ninetyToMain,   nextToMain,      MAIN},
                                                         {nNextToMain,   0,               nextToMain},
                                                         {nMAIN,         nNextToMain,    ninetyToMain}};
 
             default -> throw new IllegalStateException("Unexpected value: " + dirString);
         }
-
-        //for (int i = -1; i <= 1; i++)
-        //    for (int j = -1; j <= 1; j++)
-        //        System.out.println(windEffect[i + 1][j + 1]);
 
         printWind(dirString, windPower);
     }
