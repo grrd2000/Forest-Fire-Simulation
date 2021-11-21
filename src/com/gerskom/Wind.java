@@ -76,26 +76,6 @@ public class Wind {
         nNextToMain = -windPower * 2f;
         ninetyToMain = -windPower;
 
-        //windEffect = new float[][] {    {nextToMain,    ninetyToMain,   nNextToMain},         //w dół
-        //        {MAIN,          0,              nMAIN},
-        //        {nextToMain,    ninetyToMain,   nNextToMain}};
-
-        //windEffect = new float[][] {    {nextToMain,    MAIN,   nextToMain},                  //w prawo
-        //         {ninetyToMain,          0,              ninetyToMain},
-        //         {nNextToMain,    nMAIN,   nNextToMain}};
-
-        //windEffect = new float[][] {    {nNextToMain,   ninetyToMain,   nextToMain},            //w góre
-        //        {nMAIN,         0,              MAIN},
-        //        {nNextToMain,   ninetyToMain,   nextToMain}};
-
-        //windEffect = new float[][] {    {nNextToMain,   nMAIN,      nNextToMain},               //w lewo
-        //        {ninetyToMain,   0,           ninetyToMain},
-        //        {nextToMain,     MAIN,        nextToMain}};
-
-        //System.out.println(MAIN);
-        //System.out.println(windEffect[1][0]);
-        //System.out.println(Arrays.deepToString(windEffect));
-
         switch (dirString) {
             case "W" -> windEffect = new float[][] {    {nNextToMain,   ninetyToMain,   nextToMain},
                                                         {nMAIN,         0,              MAIN},

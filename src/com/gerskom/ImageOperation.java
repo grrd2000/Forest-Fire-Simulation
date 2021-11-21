@@ -1,7 +1,5 @@
 package com.gerskom;
 
-import java.awt.*;
-
 public class ImageOperation {
     public final ImageData imageData;
 

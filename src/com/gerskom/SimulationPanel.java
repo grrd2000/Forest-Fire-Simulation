@@ -9,16 +9,9 @@ import java.io.IOException;
 
 public class SimulationPanel extends JPanel{
     public final Grid map;
-    public boolean pause = true;
     public boolean started = false;
 
     private int deltaTime = 20;
-
-    //private Color bgColor = new Color(86, 43, 35);
-    //private Color fireColor = new Color(227, 92, 7);
-    //private Color treeColor = new Color(72, 136, 42);
-    //private  Color water = new Color(143, 181, 225);
-    //private  Color grass = new Color(152, 180, 74);
 
     private  Color water = new Color(50, 50, 50);
     private Color bgColor = new Color(110, 110, 110);
@@ -67,13 +60,11 @@ public class SimulationPanel extends JPanel{
         Timer timer;
         started = true;
 
-        if(!pause) {
-            timer = new Timer(deltaTime, e -> {
-                map.startSimulation();
-                repaint();
-            });
-            timer.start();
-        }
+        timer = new Timer(deltaTime, e -> {
+            map.startSimulation();
+            repaint();
+        });
+        timer.start();
     }
 
     public void exportImage(String fileName) throws IOException {

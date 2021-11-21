@@ -25,8 +25,8 @@ public class Grid {
 
     private final double fireP = 21;
     private final double grassFireP = 12;
-    private final double randomFireP = 0.000001;
-    private final double resurrectionP = 0.001;
+    private final double randomFireP = 0.0000025;
+    private final double resurrectionP = 0.0025;
     private final double burntP = 9;
 
     private final Wind wind;

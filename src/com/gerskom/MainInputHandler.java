@@ -19,14 +19,9 @@ public class MainInputHandler implements KeyListener, MouseListener, MouseMotion
         switch (e.getKeyChar()) {
             case '\n' -> {
                 if (!simulationPanel.started) {
-                    simulationPanel.pause = false;
-                    System.out.println("~START~");
+                    System.out.println("START");
                     simulationPanel.startTheFire();
                 }
-            }
-            case ' ' -> {
-                simulationPanel.pause = true;
-                System.out.println("~PAUSE~");
             }
             case 'r' -> {
                 simulationPanel.map.addInitialRandomTrees();
@@ -36,7 +31,7 @@ public class MainInputHandler implements KeyListener, MouseListener, MouseMotion
             case 'f' -> {
                 try {
                     simulationPanel.exportImage("forest_fire");
-                    System.out.println("~FRAME EXPORTED~");
+                    System.out.println("FRAME EXPORTED");
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
