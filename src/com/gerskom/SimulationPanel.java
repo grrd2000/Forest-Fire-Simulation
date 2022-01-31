@@ -11,13 +11,14 @@ public class SimulationPanel extends JPanel{
     public final Grid map;
     public boolean started = false;
 
-    private int deltaTime = 20;
+    private int deltaTime = 2;
+    private int i = 0;
 
     private  Color water = new Color(50, 50, 50);
     private Color bgColor = new Color(110, 110, 110);
     private Color treeColor = new Color(170, 170, 170);
     private  Color grass = new Color(225, 225, 225);
-    private Color fireColor = new Color(255, 38, 0);
+    private Color fireColor = new Color(255, 10, 0);
 
     public SimulationPanel (Grid grid) {
         super();
@@ -62,7 +63,14 @@ public class SimulationPanel extends JPanel{
 
         timer = new Timer(deltaTime, e -> {
             map.startSimulation();
+
+            if(i % 2 == 0) {
+                try { exportImage("no_wind_and_map"); }
+                catch (IOException ex) { ex.printStackTrace(); }
+            }
+
             repaint();
+            i++;
         });
         timer.start();
     }
@@ -92,7 +100,7 @@ public class SimulationPanel extends JPanel{
         }
         g2D.dispose();
 
-        String formatName = "bmp";
+        String formatName = "png";
         File file;
 
         if (map.i != 0)

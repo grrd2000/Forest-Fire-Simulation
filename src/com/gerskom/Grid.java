@@ -45,7 +45,7 @@ public class Grid {
             for (int y = 0; y < height; y++)
                 this.imageTable[x][y] = burnt;
         this.inputImageTable = new int[width][height];
-        this.wind = new Wind();
+        this.wind = new Wind("SE", 3.9f);
         dataCopier();
     }
 
