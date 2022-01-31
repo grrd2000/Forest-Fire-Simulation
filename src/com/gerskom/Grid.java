@@ -57,7 +57,7 @@ public class Grid {
         this.tmpTable = new int[width][height];
         this.imageTable = new int[width][height];
         this.inputImageTable = new int[width][height];
-        this.wind = new Wind();
+        this.wind = new Wind("W", 3.85f);
         backgroundImage();
         importImageData(id);
         dataCopier();

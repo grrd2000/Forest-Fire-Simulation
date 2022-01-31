@@ -62,10 +62,10 @@ public class SimulationPanel extends JPanel{
 
         timer = new Timer(deltaTime, e -> {
             map.startSimulation();
-            //if(i % 2 == 0) {
-            //    try { exportImage("no_wind_and_map"); }
-            //    catch (IOException ex) { ex.printStackTrace(); }
-            //}
+            if(map.i % 2 == 0) {
+                try { exportImage("forest_fire"); }
+                catch (IOException ex) { ex.printStackTrace(); }
+            }
             repaint();
         });
         timer.start();
@@ -96,7 +96,7 @@ public class SimulationPanel extends JPanel{
         }
         g2D.dispose();
 
-        String formatName = "bmp";
+        String formatName = "png";
         File file;
 
         if (map.i != 0)

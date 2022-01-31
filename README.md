@@ -31,7 +31,9 @@ College project on discrete modeling using cellular automata and various image t
 * Joining all the steps together.
 
 ### The final result
-
+<p align="center">
+    <img src="./output/map_with_wind.gif">
+</p>
 
 ## Sources and inspirations
 * https://en.wikipedia.org/wiki/Cellular_automaton
