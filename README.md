@@ -28,7 +28,7 @@ College project on discrete modeling using cellular automata and various image t
     <img src="./output/wind_no_map_gif_30ms.gif">
 </p>
 
-* Joining all the steps together.
+* Finally, joining all the steps together.
 
 ### The final result
 <p align="center">
