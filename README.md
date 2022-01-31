@@ -19,8 +19,14 @@ College project on discrete modeling using cellular automata and various image t
 </p>
 
 * Simulating a forest fire using cellular automata in a regular window application to create and refine probability coefficients.
+<p align="center">
+    <img src="(output/no_wind_no_map_gif_30ms.gif)">
+</p>
 
 * Adding the wind functionality - creating and refining wind-effect matrices.
+<p align="center">
+    <img src="![](output/wind_no_map_gif_30ms.gif)">
+</p>
 
 * Joining all the steps together.
 
